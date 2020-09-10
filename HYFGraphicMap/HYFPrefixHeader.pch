@@ -1,0 +1,120 @@
+//
+//  HYFPrefixHeader.pch
+//  HYFGraphicMap
+//
+//  Created by iOS on 2020/9/9.
+//  Copyright © 2020 heyafei. All rights reserved.
+//
+
+#ifndef HYFPrefixHeader_pch
+#define HYFPrefixHeader_pch
+//#import <CoreLocation/CoreLocation.h>
+#import <UIImageView+WebCache.h>
+#import "UIView+TBFrame.h"
+#import "UIView+ViewLayer.h"
+#import "JXPCEdgeInsets.h"
+#import "UIButton+SSEdgeInsets.h"
+#import "TBBaseViewController.h"
+#import <JSONModel/JSONModel.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import <UIKit/UIKit.h>
+
+#define kScreenW [UIScreen mainScreen].bounds.size.width
+#define kScreenH  [UIScreen mainScreen].bounds.size.height
+
+#define kISiPhone [[UIDevice currentDevice].model isEqualToString:@"iPhone"]
+#define kScreenMaxLength (MAX(kScreenW, kScreenH))
+#define kScreenMinLength (MIN(kScreenW, kScreenH))
+#define kISiPhone5 (kISiPhone && kScreenMaxLength == 568.0)
+#define kISiPhone6 (kISiPhone && kScreenMaxLength == 667.0)
+#define kISiPhone6P (kISiPhone && kScreenMaxLength == 736.0)
+#define kISiPhoneX (kISiPhone && kScreenMaxLength == 812.0)
+#define kISiPhoneXr (kISiPhone && kScreenMaxLength == 896.0)
+#define kISiPhoneXX (kISiPhone && kScreenMaxLength > 810.0)
+#define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
+#define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
+
+#define kScale_W(w) ((kScreenW)/375) * (w)
+#define kScale_H(h) (kScreenH/667) * (h)
+
+// 适配比例
+#define ADAPTATIONRATIO     kScreenW / 750.0f
+//字体适配
+#define kScaleFont(fontSize) [UIFont systemFontOfSize: fontSize*kScreenW/375]
+//状态栏高度
+//#define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+//状态栏高度
+#define kStatusBarHeight (kISiPhoneXX?44:20)
+//tabbar栏高度
+#define kTabBarHeight (kStatusBarHeight > 20 ? 83 : 49)
+//导航栏高度
+#define kNavBarHeight (kStatusBarHeight + 44)
+//安全区高度
+#define kSafeAreaBottom (kISiPhoneXX ? 34 : 0)
+
+#define kPingFangBold(x) [UIFont fontWithName:@"PingFang-SC-Bold" size:x]
+#define kBoldFont(x) [UIFont fontWithName:@"PingFang-SC-Medium" size:x]
+#define kHeavyFont(x) [UIFont fontWithName:@"PingFang-SC-Heavy" size:x]
+#define kFont(x) [UIFont systemFontOfSize:x]
+#define kNormalFont(x) [UIFont fontWithName:@"PingFang SC" size:x]
+#define Nav_Back_Font_M kBoldFont(18)
+//RGB格式
+#define kRGB(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+//RGBA格式
+#define kRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+//随机颜色
+#define kRandomColor [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0]
+#pragma mark -基础颜色
+/*白色*/
+#define kWhiteColor [UIColor whiteColor]
+/*蓝色*/
+#define kBlueColor [UIColor blueColor]
+/*黑色*/
+#define kBlackColor [UIColor blackColor]
+/*红色*/
+#define kRedColor [UIColor redColor]
+/*绿色*/
+#define kGreenColor [UIColor greenColor]
+#define kGrayColor [UIColor grayColor]
+#define kGray2Color [UIColor lightGrayColor]
+#define kClearColor [UIColor clearColor]
+#define KTextColor  [UIColor colorWithHexString:@"#333333"]
+#define KSubTextColor  [UIColor colorWithHexString:@"#999999"]
+#define K47CCTextColor  [UIColor colorWithHexString:@"#47CCA0"]
+#define KHEXColor(A)  [UIColor colorWithHexString:A]
+
+
+#define kMainColor kRGBA(60, 188, 252, 1)
+
+#define KTagColor kRGB(71, 204, 160)
+#define kMainGrayColor kRGB(153, 153, 153)
+#define kMainBlackColor kRGB(51, 51, 51)
+#define kIMAGE_Name(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
+
+
+// View 圆角和加边框
+#define kViewBorderRadius(View, Radius, Width, Color)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES];\
+[View.layer setBorderWidth:(Width)];\
+[View.layer setBorderColor:[Color CGColor]]
+// View 圆角
+#define kViewRadius(View, Radius)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES]
+
+
+#define kStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
+
+
+//输出
+#ifdef DEBUG
+#define ASLog(...) NSLog(__VA_ARGS__)
+#define debugMethod() NSLog(@"%s", __func__)
+#else
+#define ASLog(...)
+#define debugMethod()
+#endif
+#endif /* HYFPrefixHeader_pch */
