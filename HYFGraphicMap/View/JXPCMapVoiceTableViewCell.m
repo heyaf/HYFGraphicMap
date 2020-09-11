@@ -107,13 +107,13 @@
             self.guiderLabelmargin.constant = 60;
         }else{
             self.PriceLabel.hidden = NO;
-            self.PriceLabel.attributedText = string;
+            self.PriceLabel.text = @"免费";
             self.guiderLabelmargin.constant = 60;
 
         }
     }else{
         self.PriceLabel.hidden = NO;
-        self.PriceLabel.attributedText = string;
+        self.PriceLabel.text = @"免费";
         self.guiderLabelmargin.constant = 60;
         
     }

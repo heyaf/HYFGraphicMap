@@ -14,7 +14,7 @@
 #import "JXPCScenicPointModel.h"
 #import "JXPCFacilityModel.h"
 
-#define downFrameY (kScreenH-kNavBarHeight-48-kSafeAreaBottom)
+#define downFrameY (kScreenH-48-kSafeAreaBottom)
 @interface JXPCMapBottomView()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray *titleButtonArray;
@@ -283,9 +283,6 @@
                    cell.ImageView.image = kIMAGE_Name(@"zs_icon");
             }
             cell.Label.text = facName;
-       
-
-        
     }
 
 

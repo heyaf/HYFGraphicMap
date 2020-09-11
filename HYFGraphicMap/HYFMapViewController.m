@@ -9,10 +9,17 @@
 #import "HYFMapViewController.h"
 #import "LJKPinAnnotationMapView.h"
 #import "JXPCMapBottomView.h"
+#import "JXPCScenicPointModel.h"
+#import "JXPCFacilityModel.h"
+#import "CalculatorLocationTool.h"
+#import "LJKPinAnnotation.h"
+#import "JXPCVoiceListModel.h"
+
 
 @interface HYFMapViewController ()
 
 @property (nonatomic,strong) LJKPinAnnotationMapView *mapView;
+@property (nonatomic,strong) CalculatorLocationTool *calTool;
 
 @property (nonatomic,strong) UIImageView *placeHolderImageV;
 
@@ -52,8 +59,16 @@
     [self.view addSubview:_placeHolderImageV];
     
     [self creatMapView];
-    
     [self CreatUI];
+    [self setData];
+
+}
+- (void)baseSet{
+    _calTool = [[CalculatorLocationTool alloc] init];
+    _calTool.leftToplocation = [_calTool getLocationWithString:@""];
+    _calTool.rightTopLocation = [_calTool getLocationWithString:@""];
+    _calTool.leftBottomLocation = [_calTool getLocationWithString:@""];
+    
 }
 - (void)creatMapView{
     if (!_mapView) {
@@ -95,7 +110,7 @@
     [self addMapViewSubViews];
     [self setNavigationView];
 
-    _mapbottomView = [[JXPCMapBottomView alloc] initWithFrame:CGRectMake(0, kScreenH-kNavBarHeight-320-kSafeAreaBottom, kScreenW, 320+kSafeAreaBottom)];
+    _mapbottomView = [[JXPCMapBottomView alloc] initWithFrame:CGRectMake(0, kScreenH-320-kSafeAreaBottom, kScreenW, 320+kSafeAreaBottom)];
     _mapbottomView.superVC = self;
     [self.view addSubview:_mapbottomView];
   
@@ -274,10 +289,61 @@
     self->_mapView.maximumZoomScale = 1.0f;
     
     UIImageView *imageV = [[UIImageView alloc] init];
-    [imageV sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:kIMAGE_Name(@"jrdt_jzz") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    [imageV sd_setImageWithURL:[NSURL URLWithString:@"http://qn-collect-test.jxpapp.com/map_1.png"] placeholderImage:kIMAGE_Name(@"jrdt_jzz") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         [self->_mapView displayMap:image];
         self->_mapView.zoomScale = (self->_mapView.bounds.size.height + 49)/ image.size.height;
         self->_mapView.minimumZoomScale = self->_mapView.minimumZoomScale < self->_mapView.zoomScale ? self->_mapView.zoomScale : self->_mapView.minimumZoomScale;
     }];
+}
+//绘制语音包景点
+- (void)drawVoicePointWithArray:(NSArray *)pointArray andOrdertype:(NSInteger)orderType{
+    NSMutableArray *mutArr = [NSMutableArray arrayWithCapacity:0];
+    for (int i=0;i<pointArray.count;i++) {
+        NSDictionary *dic = pointArray[i];
+        NSString *str = dic[@"ssaLongitudeLatitude"];
+        CLLocationCoordinate2D coor1 = [_calTool getLocationWithsize:self.imagesize location:[_calTool getLocationWithString:str]];
+        LJKPinAnnotation *dot = [LJKPinAnnotation annotationWithPoint:CGPointMake(coor1.longitude, coor1.latitude)];
+        dot.title = dic[@"ssaName"];
+        dot.imageUrl = dic[@"definiteImage"];
+        dot.linePointId = [dic[@"id"] integerValue];
+        dot.type = Voice;
+        dot.linenum = i+1;
+        dot.scenicType = orderType;
+            dot.scenicType =1;
+        dot.canTrial = [dic[@"clientVoicePacketDetails"][@"isAudition"] integerValue]==1?YES:NO;
+        [mutArr addObject:dot];
+    }
+
+    [_mapView addAnnotations:mutArr animated:YES];
+    
+}
+
+-(void)setData{
+    
+    NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"scenicData" ofType:@"json"];
+    NSData *jsonData = [NSData dataWithContentsOfFile:videoPath];
+    NSArray *arr = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+    self.ScenicPointArray = [JXPCScenicPointModel arrayOfModelsFromDictionaries:arr error:nil];
+    self.mapbottomView.scenicPointListArr = self.ScenicPointArray;
+    
+    NSString *videoPath1 = [[NSBundle mainBundle] pathForResource:@"facility" ofType:@"json"];
+    NSData *jsonData1 = [NSData dataWithContentsOfFile:videoPath1];
+    NSArray *arr1 = [NSJSONSerialization JSONObjectWithData:jsonData1 options:NSJSONReadingAllowFragments error:nil];
+    self.facilityArray = [JXPCFacilityModel arrayOfModelsFromDictionaries:arr1 error:nil];
+    self.mapbottomView.facilityArray = self.facilityArray;
+    
+    
+    NSString *voicePath = [[NSBundle mainBundle] pathForResource:@"VoiceData" ofType:@"json"];
+    NSData *VoiceJsonData = [NSData dataWithContentsOfFile:voicePath];
+    NSArray *voicearr = [NSJSONSerialization JSONObjectWithData:VoiceJsonData options:NSJSONReadingAllowFragments error:nil];
+    self.VoiceDetailArray = voicearr;
+    [self drawVoicePointWithArray:voicearr andOrdertype:1];
+
+    NSString *voicelistPath = [[NSBundle mainBundle] pathForResource:@"VoiceListData1" ofType:@"json"];
+    NSData *VoiceListJsonData = [NSData dataWithContentsOfFile:voicelistPath];
+    NSArray *voicearr1 = [NSJSONSerialization JSONObjectWithData:VoiceListJsonData options:NSJSONReadingAllowFragments error:nil];
+    self.VoiceListArray = [JXPCVoiceListModel arrayOfModelsFromDictionaries:voicearr1 error:nil];
+    self.mapbottomView.voiceListArr = self.VoiceListArray;
+
 }
 @end

@@ -13,6 +13,10 @@
 		AB3A2EEE250A0D1B007F6306 /* HSSessionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2EE7250A0D1B007F6306 /* HSSessionModel.m */; };
 		AB3A2EEF250A0D1B007F6306 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2EE9250A0D1B007F6306 /* NSString+Hash.m */; };
 		AB3A2EF0250A0D1B007F6306 /* HSDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2EED250A0D1B007F6306 /* HSDownloadManager.m */; };
+		AB8C7ABE250B1B89007576BA /* scenicData.json in Resources */ = {isa = PBXBuildFile; fileRef = AB8C7ABD250B1B88007576BA /* scenicData.json */; };
+		AB8C7AC5250B4FFF007576BA /* facility.json in Resources */ = {isa = PBXBuildFile; fileRef = AB8C7AC4250B4FFF007576BA /* facility.json */; };
+		AB8C7AC9250B50A5007576BA /* VoiceData.json in Resources */ = {isa = PBXBuildFile; fileRef = AB8C7AC8250B50A5007576BA /* VoiceData.json */; };
+		AB8C7ACB250B5246007576BA /* VoiceListData1.json in Resources */ = {isa = PBXBuildFile; fileRef = AB8C7ACA250B5246007576BA /* VoiceListData1.json */; };
 		ABA22E592508CA640017C311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA22E582508CA640017C311 /* AppDelegate.m */; };
 		ABA22E5C2508CA650017C311 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA22E5B2508CA650017C311 /* SceneDelegate.m */; };
 		ABA22E5F2508CA650017C311 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA22E5E2508CA650017C311 /* ViewController.m */; };
@@ -119,6 +123,10 @@
 		AB3A2EEB250A0D1B007F6306 /* HSDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSDownloadManager.h; sourceTree = "<group>"; };
 		AB3A2EEC250A0D1B007F6306 /* HSSessionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSessionModel.h; sourceTree = "<group>"; };
 		AB3A2EED250A0D1B007F6306 /* HSDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSDownloadManager.m; sourceTree = "<group>"; };
+		AB8C7ABD250B1B88007576BA /* scenicData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scenicData.json; sourceTree = "<group>"; };
+		AB8C7AC4250B4FFF007576BA /* facility.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facility.json; sourceTree = "<group>"; };
+		AB8C7AC8250B50A5007576BA /* VoiceData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoiceData.json; sourceTree = "<group>"; };
+		AB8C7ACA250B5246007576BA /* VoiceListData1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoiceListData1.json; sourceTree = "<group>"; };
 		ABA22E542508CA640017C311 /* HYFGraphicMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYFGraphicMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA22E572508CA640017C311 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ABA22E582508CA640017C311 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -360,6 +368,10 @@
 				ABA22E5E2508CA650017C311 /* ViewController.m */,
 				ABA22E8C2508D7780017C311 /* HYFMapViewController.h */,
 				ABA22E8D2508D7780017C311 /* HYFMapViewController.m */,
+				AB8C7ABD250B1B88007576BA /* scenicData.json */,
+				AB8C7AC4250B4FFF007576BA /* facility.json */,
+				AB8C7AC8250B50A5007576BA /* VoiceData.json */,
+				AB8C7ACA250B5246007576BA /* VoiceListData1.json */,
 				ABA22E8F2508D7C20017C311 /* 手绘地图 */,
 				ABA22F0C250A09500017C311 /* Model */,
 				ABA22F22250A09500017C311 /* View */,
@@ -690,14 +702,17 @@
 				ABA22EE12508D7C20017C311 /* pin_green_floating@2x.png in Resources */,
 				ABA22E672508CA690017C311 /* LaunchScreen.storyboard in Resources */,
 				ABA22E642508CA690017C311 /* Assets.xcassets in Resources */,
+				AB8C7ACB250B5246007576BA /* VoiceListData1.json in Resources */,
 				ABA22EE92508D7C20017C311 /* pin_green_floating.png in Resources */,
 				ABA22F39250A09500017C311 /* JXPCMapVoiceTableViewCell.xib in Resources */,
+				AB8C7AC9250B50A5007576BA /* VoiceData.json in Resources */,
 				ABA22EE22508D7C20017C311 /* callout_right.png in Resources */,
 				ABA22EEF2508D7C20017C311 /* pin_red_floating@2x.png in Resources */,
 				ABA22EF12508D7C20017C311 /* pin_red@2x.png in Resources */,
 				ABA22EDE2508D7C20017C311 /* callout_left@2x.png in Resources */,
 				ABA22EDF2508D7C20017C311 /* callout_left.png in Resources */,
 				ABA22EEC2508D7C20017C311 /* callout_anchor@2x.png in Resources */,
+				AB8C7AC5250B4FFF007576BA /* facility.json in Resources */,
 				ABA22EDA2508D7C20017C311 /* callout_bg@2x.png in Resources */,
 				ABA22F3C250A09500017C311 /* JXPCDownVoiceTableViewCell.xib in Resources */,
 				ABA22EDD2508D7C20017C311 /* pin_purple@2x.png in Resources */,
@@ -706,6 +721,7 @@
 				ABA22ED62508D7C20017C311 /* callout_right@2x.png in Resources */,
 				ABA22E622508CA650017C311 /* Main.storyboard in Resources */,
 				ABA22EEB2508D7C20017C311 /* callout_anchor.png in Resources */,
+				AB8C7ABE250B1B89007576BA /* scenicData.json in Resources */,
 				ABA22EDB2508D7C20017C311 /* callout_bg.png in Resources */,
 				ABA22EED2508D7C20017C311 /* pin_green@2x.png in Resources */,
 				ABA22EE42508D7C20017C311 /* pin_purple.png in Resources */,

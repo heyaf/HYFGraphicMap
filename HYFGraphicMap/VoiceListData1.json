@@ -1,0 +1,37 @@
+[
+    {
+   "isFree": 0,
+   "voiceDuration":"30",
+   "clientVoicePacketSumStar": 50,
+   "clientGuide":     {
+       "gender": 1,
+       "commentNumber": 0,
+       "updateTime": 1585904961000,
+       "clientGuideNamePinyin":"chengxianbei",
+       "id": 30,
+       "guideSumStar": 0,
+       "clientGuideName":"程宪北",
+       "guideLabel":"资深导游",
+       "clientGuideElephant":"https://qn.jxpapp.com/weijinpng.png",
+       "createTime":"",
+    },
+   "updateTime": 1585904961000,
+   "isShelf": 1,
+   "discountActivity":"喜迎国庆！乐享时惠",
+   "commentNumber": 5,
+   "count": 0,
+   "tellNumber": 10,
+   "voicePacketName":"游东京梦华之—千年忠义天波府",
+   "id": 30,
+   "label":"商业景区",
+   "voicePacketImageUrl":"https://qn.jxpapp.com/%E9%92%9F%E6%A5%BC%EF%BC%88%E5%A4%A9%EF%BC%89.jpg",
+   "clientGuideId": 1,
+   "isRecommend": 0,
+   "introduction":"",
+   "createTime":"",
+   "price": 1,
+   "clientScenicSpotBasicId": 1,
+        
+    }
+
+]
