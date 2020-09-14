@@ -44,6 +44,7 @@
 @property (nonatomic,strong) NSArray *VoiceListArray; //语音列表数组
 @property (nonatomic,strong) NSArray *VoiceDetailArray; //语音详情数组
 @property (nonatomic,strong) NSArray *lineVoiceArray; //路线语音详情数组
+@property (nonatomic,strong) NSArray *linePointArray;
 
 @property (nonatomic,strong) NSMutableArray *ScenicPinAniMutArray;  //景点数组（LJKPinAnnotation类型）
 @property (nonatomic,strong) NSArray *facilityArray; //设施数组
@@ -65,9 +66,9 @@
 }
 - (void)baseSet{
     _calTool = [[CalculatorLocationTool alloc] init];
-    _calTool.leftToplocation = [_calTool getLocationWithString:@""];
-    _calTool.rightTopLocation = [_calTool getLocationWithString:@""];
-    _calTool.leftBottomLocation = [_calTool getLocationWithString:@""];
+    _calTool.leftToplocation = [_calTool getLocationWithString:@"34.811889,114.345857"];
+    _calTool.rightTopLocation = [_calTool getLocationWithString:@"34.811889,114.348685"];
+    _calTool.leftBottomLocation = [_calTool getLocationWithString:@"34.809242,114.345857"];
     
 }
 - (void)creatMapView{
@@ -134,17 +135,20 @@
 
 
     };
-    _mapbottomView.lineBtnblock = ^(NSInteger lineNameid, NSInteger voiceId,NSDictionary *orderDic) {
-        [weakself clearMapImageView];
-        weakself.maptype = 1;
-//        [weakself getLineDeatilDataWithLineID:lineNameid voiceId:voiceId voiceDic:orderDic];
-        weakself.isDrawline = YES;
+    _mapbottomView.lineBtnblock = ^{
+                [weakself clearMapImageView];
+                weakself.maptype = 1;
+        //        [weakself getLineDeatilDataWithLineID:lineNameid voiceId:voiceId voiceDic:orderDic];
+                weakself.isDrawline = YES;
+        [weakself drawLineWithLineArr:weakself.linePointArray lineID:1];
     };
+
 
     _mapbottomView.voiceBtnblock = ^(NSInteger voiceId,NSDictionary * _Nonnull orderDic) {
         [weakself clearMapImageView];
         weakself.isDrawline = NO;
         weakself.maptype = 2;
+        [weakself drawVoicePointWithArray:weakself.VoiceDetailArray andOrdertype:1];
 //        [weakself getVoiceDetailDataWithvoiceId:kStringFormat(@"%li",(long)voiceId) dic:orderDic];
         weakself.voiceId = voiceId;
         weakself.voiceDic = orderDic;
@@ -317,7 +321,48 @@
     [_mapView addAnnotations:mutArr animated:YES];
     
 }
+/// 绘制路线
+/// @param linePointArray 路线点数组
+/// @param lineid 路线id
+- (void)drawLineWithLineArr:(NSArray *)linePointArray lineID:(NSInteger) lineid{
+    NSMutableArray *mutArr = [NSMutableArray arrayWithCapacity:0];
 
+    NSMutableArray *pointArray = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *lineDic in linePointArray) {
+        [pointArray addObject:lineDic[@"ssrsLongitudeLatitude"]];
+    }
+    CalculatorLocationTool *tool = [[CalculatorLocationTool alloc] init];
+    UIColor *lineColor = kRGB(79, 172, 254);
+//    switch (lineid) {
+//        case 1:  //一日游
+//            lineColor = kRGB(255, 162, 0);
+//            break;
+//        case 2:  //半日游
+//            lineColor = kRGB(79, 172, 254);
+//
+//            break;
+//        case 3:  //快速游
+//            lineColor = kRGB(255, 88, 95);
+//            break;
+//
+//        default:
+//            break;
+//    }
+
+    for (NSString *str in pointArray) {
+        CLLocationCoordinate2D coor = [tool getLocationWithString:str];
+
+        NSValue *value = [NSValue value:&coor withObjCType:@encode(CLLocationCoordinate2D)];
+        [mutArr addObject:value];
+    }
+    [self DrawLinelineArray:mutArr arcLine:0 color:lineColor];
+}
+-(void)DrawLinelineArray:(NSArray*)pointArray arcLine:(NSInteger)arcline color:(UIColor *)color{
+
+    CalculatorLocationTool *tool = [[CalculatorLocationTool alloc] init];
+    [_mapView.imageView drawCurvewithImageSize:self.imagesize Array:pointArray ishu:arcline TopLeftPoint:[tool getLocationWithString:@"34.811889,114.345857"] TopRightPoint:[tool getLocationWithString:@"34.811889,114.348685"] LeftBottom:[tool getLocationWithString:@"34.809242,114.345857"] linewidth:15.0 color:color];
+
+}
 -(void)setData{
     
     NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"scenicData" ofType:@"json"];
@@ -344,6 +389,13 @@
     NSArray *voicearr1 = [NSJSONSerialization JSONObjectWithData:VoiceListJsonData options:NSJSONReadingAllowFragments error:nil];
     self.VoiceListArray = [JXPCVoiceListModel arrayOfModelsFromDictionaries:voicearr1 error:nil];
     self.mapbottomView.voiceListArr = self.VoiceListArray;
+    
+    NSString *linePointPath = [[NSBundle mainBundle] pathForResource:@"LinePointData" ofType:@"json"];
+    NSData *linePointPathData = [NSData dataWithContentsOfFile:linePointPath];
+    NSArray *linePointarr = [NSJSONSerialization JSONObjectWithData:linePointPathData options:NSJSONReadingAllowFragments error:nil];
+    self.linePointArray = linePointarr;
 
+
+    self.mapbottomView.LineNameArr = @[@"路线一"];
 }
 @end

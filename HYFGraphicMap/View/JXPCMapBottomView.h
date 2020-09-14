@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 //标题title按钮点击回调
 
 @property (nonatomic, copy) void(^ScenicBtnblock)(NSInteger spId);
-@property (nonatomic, copy) void(^lineBtnblock)(NSInteger lineNameid,NSInteger voiceId,NSDictionary *orderDic);
+@property (nonatomic, copy) void(^lineBtnblock)(void);
 @property (nonatomic, copy) void(^voiceBtnblock)(NSInteger voiceId,NSDictionary *orderDic);
 
 /// 设施点击回调

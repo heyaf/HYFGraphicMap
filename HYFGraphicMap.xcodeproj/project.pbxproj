@@ -89,6 +89,7 @@
 		ABA22F3D250A09500017C311 /* JXPCMapBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA22F2B250A09500017C311 /* JXPCMapBottomView.m */; };
 		ABA22F3E250A09500017C311 /* JXPCMapNormalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABA22F2C250A09500017C311 /* JXPCMapNormalTableViewCell.xib */; };
 		ABA22F42250A09BD0017C311 /* TBBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA22F41250A09BC0017C311 /* TBBaseViewController.m */; };
+		ABD2BC8C250F749B00788E90 /* LinePointData.json in Resources */ = {isa = PBXBuildFile; fileRef = ABD2BC8B250F749B00788E90 /* LinePointData.json */; };
 		B6CB9EAB9CA0D622FAAEC4E9 /* Pods_HYFGraphicMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F967DF629514911A011FDA /* Pods_HYFGraphicMapTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -248,6 +249,7 @@
 		ABA22F2D250A09500017C311 /* JXPCMapNormalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXPCMapNormalTableViewCell.h; sourceTree = "<group>"; };
 		ABA22F40250A09BC0017C311 /* TBBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBaseViewController.h; sourceTree = "<group>"; };
 		ABA22F41250A09BC0017C311 /* TBBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBaseViewController.m; sourceTree = "<group>"; };
+		ABD2BC8B250F749B00788E90 /* LinePointData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinePointData.json; sourceTree = "<group>"; };
 		AD480C8221F35A101AB11710 /* Pods-HYFGraphicMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HYFGraphicMap.debug.xcconfig"; path = "Target Support Files/Pods-HYFGraphicMap/Pods-HYFGraphicMap.debug.xcconfig"; sourceTree = "<group>"; };
 		B78F07149514F21637077E7D /* Pods_HYFGraphicMap_HYFGraphicMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HYFGraphicMap_HYFGraphicMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9691EE5C56883EA5CE7B9D1 /* Pods-HYFGraphicMap-HYFGraphicMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HYFGraphicMap-HYFGraphicMapUITests.release.xcconfig"; path = "Target Support Files/Pods-HYFGraphicMap-HYFGraphicMapUITests/Pods-HYFGraphicMap-HYFGraphicMapUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				AB8C7AC4250B4FFF007576BA /* facility.json */,
 				AB8C7AC8250B50A5007576BA /* VoiceData.json */,
 				AB8C7ACA250B5246007576BA /* VoiceListData1.json */,
+				ABD2BC8B250F749B00788E90 /* LinePointData.json */,
 				ABA22E8F2508D7C20017C311 /* 手绘地图 */,
 				ABA22F0C250A09500017C311 /* Model */,
 				ABA22F22250A09500017C311 /* View */,
@@ -566,15 +569,15 @@
 		ABA22F22250A09500017C311 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABA22F27250A09500017C311 /* JXPCMapBottomView.h */,
+				ABA22F2B250A09500017C311 /* JXPCMapBottomView.m */,
 				ABA22F23250A09500017C311 /* JXPCDownVoiceTableViewCell.m */,
 				ABA22F24250A09500017C311 /* JXPCMapVoiceTableViewCell.xib */,
 				ABA22F25250A09500017C311 /* JXPCMapVoiceTableViewCell.m */,
 				ABA22F26250A09500017C311 /* JXPCMapNormalTableViewCell.m */,
-				ABA22F27250A09500017C311 /* JXPCMapBottomView.h */,
 				ABA22F28250A09500017C311 /* JXPCDownVoiceTableViewCell.h */,
 				ABA22F29250A09500017C311 /* JXPCDownVoiceTableViewCell.xib */,
 				ABA22F2A250A09500017C311 /* JXPCMapVoiceTableViewCell.h */,
-				ABA22F2B250A09500017C311 /* JXPCMapBottomView.m */,
 				ABA22F2C250A09500017C311 /* JXPCMapNormalTableViewCell.xib */,
 				ABA22F2D250A09500017C311 /* JXPCMapNormalTableViewCell.h */,
 			);
@@ -706,6 +709,7 @@
 				ABA22EE92508D7C20017C311 /* pin_green_floating.png in Resources */,
 				ABA22F39250A09500017C311 /* JXPCMapVoiceTableViewCell.xib in Resources */,
 				AB8C7AC9250B50A5007576BA /* VoiceData.json in Resources */,
+				ABD2BC8C250F749B00788E90 /* LinePointData.json in Resources */,
 				ABA22EE22508D7C20017C311 /* callout_right.png in Resources */,
 				ABA22EEF2508D7C20017C311 /* pin_red_floating@2x.png in Resources */,
 				ABA22EF12508D7C20017C311 /* pin_red@2x.png in Resources */,

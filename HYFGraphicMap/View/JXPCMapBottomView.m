@@ -34,8 +34,8 @@
 
 /// 景点数组
 @property (nonatomic,strong) NSMutableArray *scenicPointArr;
-/// 路线数组
-@property (nonatomic,strong) NSMutableArray *sceniclineArr;
+///// 路线数组
+//@property (nonatomic,strong) NSMutableArray *sceniclineArr;
 
 @property (nonatomic,assign) NSInteger lineIndex;  //选中的路线
 @property (nonatomic,assign) NSInteger voiceIndex;  //选中的语音
@@ -109,12 +109,12 @@
 }
 -(void)setLineNameArr:(NSArray *)LineNameArr{
     _LineNameArr = LineNameArr;
-    self.sceniclineArr = [NSMutableArray arrayWithCapacity:0];
-    for (JXPCLineNameModel *lineNameModel in LineNameArr) {
-        if (lineNameModel.ssrtRouteNameStatus==1) {
-            [self.sceniclineArr addObject:lineNameModel];
-        }
-    }
+//    self.sceniclineArr = [NSMutableArray arrayWithCapacity:0];
+//    for (JXPCLineNameModel *lineNameModel in LineNameArr) {
+//        if (lineNameModel.ssrtRouteNameStatus==1) {
+//            [self.sceniclineArr addObject:lineNameModel];
+//        }
+//    }
 }
 -(void)setScenicPointListArr:(NSArray *)scenicPointListArr{
     _scenicPointListArr = scenicPointListArr;
@@ -145,9 +145,8 @@
         }
     }else if ([_selectNameString isEqualToString:@"路线"]){
         if (self.lineBtnblock) {
-            JXPCLineNameModel *lineNameModel = self.LineNameArr[_lineIndex];
-            JXPCVoiceListModel *voiceModel = self.voiceListArr[_voiceIndex];
-            self.lineBtnblock(lineNameModel.lineId,voiceModel.VoiceId,voiceModel.clientOrder);
+
+            self.lineBtnblock();
         }
         NSIndexPath *Path = [NSIndexPath indexPathForItem:self.lineIndex inSection:0];
         [self tableView:_tableView didSelectRowAtIndexPath:Path];
@@ -238,11 +237,11 @@
             cell.tagImageView.image = kIMAGE_Name(@"jrdt_st");
         }
     }else if([self.selectNameString isEqualToString:@"路线"]){
-        JXPCLineNameModel *linenameModel  = self.sceniclineArr[indexPath.row];
-        cell.Label.text = linenameModel.ssrtRouteName;
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:linenameModel.iconImage] placeholderImage:kIMAGE_Name(@"lx_fast")];
+//        JXPCLineNameModel *linenameModel  = self.sceniclineArr[indexPath.row];
+        cell.Label.text = self.LineNameArr[indexPath.row];
+        cell.ImageView.image = kIMAGE_Name(@"lx_fast");
 //        if ([linenameModel.ssrtRouteName isEqualToString:@"快速游"]) {
-//            cell.ImageView.image = kIMAGE_Name(@"lx_fast");
+//
 //        }else if ([linenameModel.ssrtRouteName isEqualToString:@"半日游"]) {
 //            cell.ImageView.image = kIMAGE_Name(@"lx_half day");
 //        }else if ([linenameModel.ssrtRouteName isEqualToString:@"一日游"]) {
@@ -295,7 +294,7 @@
     if ([self.selectNameString isEqualToString:@"景点"]) {
        return self.scenicPointListArr.count;
     }else if ([self.selectNameString isEqualToString:@"路线"]) {
-        return self.sceniclineArr.count;
+        return self.LineNameArr.count;
     }else if ([self.selectNameString isEqualToString:@"听讲解"]) {
         return self.voiceListArr.count;
     }else{
@@ -351,9 +350,8 @@
         normalCell.SelectImageView.hidden = NO;
         self.lineIndex = indexPath.row;
         if (self.lineBtnblock) {
-           JXPCLineNameModel *lineNameModel = self.LineNameArr[_lineIndex];
-           JXPCVoiceListModel *voiceModel = self.voiceListArr[_voiceIndex];
-           self.lineBtnblock(lineNameModel.lineId,voiceModel.VoiceId,voiceModel.clientOrder);
+
+           self.lineBtnblock();
         }
     }else if ([self.selectNameString isEqualToString:@"景点"]){
         self.downUpBtn.selected = YES;
