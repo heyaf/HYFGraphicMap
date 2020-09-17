@@ -58,12 +58,13 @@
     _placeHolderImageV= [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 555)];
     _placeHolderImageV.image = kIMAGE_Name(@"jrdt_jzz");
     [self.view addSubview:_placeHolderImageV];
-    
+    [self baseSet];
     [self creatMapView];
     [self CreatUI];
     [self setData];
 
 }
+//初始化计算工具类
 - (void)baseSet{
     _calTool = [[CalculatorLocationTool alloc] init];
     _calTool.leftToplocation = [_calTool getLocationWithString:@"34.811889,114.345857"];
@@ -71,6 +72,7 @@
     _calTool.leftBottomLocation = [_calTool getLocationWithString:@"34.809242,114.345857"];
     
 }
+//初始化地图视图
 - (void)creatMapView{
     if (!_mapView) {
         
@@ -115,64 +117,38 @@
     _mapbottomView.superVC = self;
     [self.view addSubview:_mapbottomView];
   
-
     __weak typeof(self) weakself = self;
+    //景点点击的回调
     _mapbottomView.ScenicBtnblock = ^(NSInteger spId){
         [weakself clearMapImageView];
 
-//        [weakself setScenicPoint];
+        [weakself setScenicPoint];
         weakself.isDrawline = NO;
-        if (spId>0) {
-            for (LJKPinAnnotation *annotation in weakself.ScenicPinAniMutArray) {
-//                if (annotation.linePointId==spId) {
-//                    [weakself.mapView showCalloutForAnnotation:annotation animated:NO];
-//                    [weakself.mapView centerOnPoint:annotation.point animated:YES];
-//                }
-            }
-            
-            
-        }
-
 
     };
+    //路线点击的回调
     _mapbottomView.lineBtnblock = ^{
                 [weakself clearMapImageView];
                 weakself.maptype = 1;
-        //        [weakself getLineDeatilDataWithLineID:lineNameid voiceId:voiceId voiceDic:orderDic];
                 weakself.isDrawline = YES;
         [weakself drawLineWithLineArr:weakself.linePointArray lineID:1];
     };
 
-
+    //语音包点击的回调
     _mapbottomView.voiceBtnblock = ^(NSInteger voiceId,NSDictionary * _Nonnull orderDic) {
         [weakself clearMapImageView];
         weakself.isDrawline = NO;
         weakself.maptype = 2;
         [weakself drawVoicePointWithArray:weakself.VoiceDetailArray andOrdertype:1];
-//        [weakself getVoiceDetailDataWithvoiceId:kStringFormat(@"%li",(long)voiceId) dic:orderDic];
         weakself.voiceId = voiceId;
         weakself.voiceDic = orderDic;
         
-//        [weakself getscenicPointData];
     };
-
+    //设施点击的回调
     _mapbottomView.SSBtnblock = ^(NSString * _Nonnull ssName) {
         [weakself clearMapImageView];
         weakself.isDrawline = NO;
-//        [weakself setFacilityPointWithName:ssName];
-//        [player stop];
-//        KPostNotification(KNotificationCallOurViewBtnChange, nil, @{@"state":@"0"});
-
-    };
-    
-    
-    _mapbottomView.ReloadVoiceListDataBlock = ^{
-//        [weakself getVoiceData];
-//        [player stop];
-
-    };
-    _mapbottomView.useOrderDataBlock = ^(NSDictionary * _Nonnull orderdic) {
-//        [weakself usermyOrder1:orderdic];
+        [weakself setFacilityPointWithName:ssName];
     };
 
 }
@@ -183,11 +159,14 @@
     [self.view addSubview:imageV];
     
     UIButton *userbtn = [UIButton buttonWithType:0];
-    userbtn.frame = CGRectMake(10, kScreenH-kNavBarHeight-48-kSafeAreaBottom-57, 42, 42);
+    userbtn.frame = CGRectMake(10, kScreenH-48-kSafeAreaBottom-57, 42, 42);
     [userbtn setImage:kIMAGE_Name(@"jrdt_positioning") forState:0];
     
     [self.view addSubview:userbtn];
-    [userbtn addTarget:self action:@selector(userPoint) forControlEvents:UIControlEventTouchUpInside];
+    [userbtn addTarget:self action:@selector(userLoction) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)userLoction{
+    [SVProgressHUD showErrorWithStatus:@"定位失败，请稍后重试"];
 }
 - (void)setNavigationView{
     
@@ -210,21 +189,20 @@
     [rightBtn setTitle:@"反馈" forState:0];
     [rightBtn setTitleColor:kMainBlackColor forState:0];
     rightBtn.titleLabel.font = kNormalFont(13);
-    [rightBtn addTarget:self action:@selector(Suggest) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(backActionSuggest) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     
-    UIView *naVpopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, kScreenH-kNavBarHeight)];
+    UIButton *leftBtn = [UIButton buttonWithType:0];
+    leftBtn.frame = CGRectMake(0, 0, 50, 13);
+    [leftBtn setTitleColor:kMainBlackColor forState:0];
+    leftBtn.titleLabel.font = kNormalFont(13);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    
+    UIView *naVpopView = [[UIView alloc] initWithFrame:CGRectMake(0,kNavBarHeight, kScreenW, kScreenH-kNavBarHeight)];
     naVpopView.backgroundColor = kClearColor;
     _NavpopView = naVpopView;
     [self.view addSubview:naVpopView];
     naVpopView.hidden = YES;
-    __weak typeof(naVpopView) weakpopView = naVpopView;
-//    [naVpopView addGestureTapEventHandle:^(id sender, UITapGestureRecognizer *gestureRecognizer) {
-//        navBtn.selected = NO;
-//        weakpopView.hidden = YES;
-//    }];
-    
-    
     
     UIImageView *jiantouView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 14, 8)];
     jiantouView.image = kIMAGE_Name(@"jrdt_triangle");
@@ -248,13 +226,6 @@
     [autioplayBtn setImagePositionWithType:SSImagePositionTypeTop spacing:5];
     [popBGView addSubview:autioplayBtn];
     [autioplayBtn addTarget:self action:@selector(autioPlayBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    NSDictionary* autoint = GetUserInfo;
-//    if ([autoint[@"isAutoplay"] integerValue]==0) {
-//        autioplayBtn.selected = YES;
-//    }
-//    if (!autoint) {
-//        autioplayBtn.selected = NO;
-//    }
     
     UIButton *downBtn = [UIButton buttonWithType:0];
     downBtn.frame = CGRectMake(leftMargin+36+marginW, 16.5, 36, 56);
@@ -275,6 +246,121 @@
     [rescueBtn setImagePositionWithType:SSImagePositionTypeTop spacing:5];
     [popBGView addSubview:rescueBtn];
     [rescueBtn addTarget:self action:@selector(rescue) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)backActionSuggest{
+    [SVProgressHUD showWithStatus:@"暂未开放，敬请期待"];
+}
+-(void)down{
+    
+}
+-(void)autioPlayBtnClicked:(UIButton *)btn{
+    btn.selected = !btn.isSelected;
+    if (btn.selected) {
+        [SVProgressHUD showSuccessWithStatus:@"自动播放已开启"];
+    }else{
+        [SVProgressHUD showSuccessWithStatus:@"自动播放已关闭"];
+    }
+}
+#pragma mark --救援点击事件---
+- (void)rescue{
+
+    NSString *telPhone = kStringFormat(@"tel://110");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telPhone] options:@{} completionHandler:^(BOOL success) {
+        
+    }];
+}
+
+/// 绘制景点
+- (void)setScenicPoint{
+    
+    NSMutableArray *mutArr = [NSMutableArray arrayWithCapacity:0];
+    for (int i=0;i<self.ScenicPointArray.count;i++) {
+        JXPCScenicPointModel *spModel = self.ScenicPointArray[i];
+        CLLocationCoordinate2D coor1 = [_calTool getLocationWithsize:self.imagesize location:[_calTool getLocationWithString:spModel.ssaLongitudeLatitude]];
+        LJKPinAnnotation *dot = [LJKPinAnnotation annotationWithPoint:CGPointMake(coor1.longitude, coor1.latitude)];
+        dot.title = spModel.ssaName;
+        dot.imageUrl = spModel.definiteImage;
+        dot.type = Scene;
+        if ([spModel.clientVoicePacketDetails[@"isEffective"] integerValue]==1||[spModel.clientVoicePacketDetails[@"isFree"] integerValue]==1) {
+            dot.scenicType =1;
+        }
+        dot.linePointId = spModel.spId;
+        dot.canTrial = [spModel.clientVoicePacketDetails[@"isAudition"] integerValue]==1?YES:NO;
+        [mutArr addObject:dot];
+    }
+    self.ScenicPinAniMutArray = mutArr;
+    [_mapView addAnnotations:mutArr animated:YES];
+    
+//    //如果存在正在播放的语音包，则更改地图语音包状态
+//    if ([YGAudioPlayer sharedInstance].playStatus == YGAudioPlayerPlayStatusPlaying) {
+//        for (LJKPinAnnotationView *mapView in _mapView.annoViewArr) {
+//            [mapView setStatues:1];
+//            if (mapView.annotation.linePointId ==[[kUserDefaults objectForKey:@"playeringId"] integerValue]) {
+//                [mapView setStatues:0];
+//            }
+//        }
+//    }
+}
+
+/// 绘制设施点
+/// @param SSname 设施name
+- (void)setFacilityPointWithName:(NSString *)SSname{
+    NSMutableArray *mutArr = [NSMutableArray arrayWithCapacity:0];
+
+    JXPCFacilityModel *facilityModel;
+    for (JXPCFacilityModel *facilityModel1 in self.facilityArray) {
+        if ([facilityModel1.ssfnFacilitiesName isEqualToString:SSname]) {
+            facilityModel = facilityModel1;
+        }
+    }
+    for (NSDictionary *dic in facilityModel.clientFacilitiesDetailsList) {
+        NSString *str =dic[@"ssfLongitudeLatitude"];
+        CLLocationCoordinate2D coor1 = [_calTool getLocationWithsize:self.imagesize location:[_calTool getLocationWithString:str]];
+        LJKPinAnnotation *dot = [LJKPinAnnotation annotationWithPoint:CGPointMake(coor1.longitude, coor1.latitude)];
+        dot.title = facilityModel.ssfnFacilitiesName;
+        [mutArr addObject:dot];
+        if ([facilityModel.ssfnFacilitiesName isEqualToString:@"售票处"]) {
+            dot.type = spcType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"游客中心"]) {
+            dot.type = ykzxType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"出入口"]) {
+            dot.type = crkType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"餐饮"]) {
+            dot.type = cyType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"购物"]) {
+            dot.type = gwType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"卫生间"]) {
+            dot.type = wcType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"停车场"]) {
+            dot.type = tccType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"热水房"]) {
+            dot.type = rsfType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"表演场"]) {
+            dot.type = bycType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"医务室"]) {
+            dot.type = ywsType;
+        }else if ([facilityModel.ssfnFacilitiesName isEqualToString:@"住宿"]) {
+            dot.type = zsType;
+        }else{
+            dot.type = tccType;
+        }
+        
+    }
+    
+    [_mapView addAnnotations:mutArr animated:YES];
+    
+    NSDictionary *dic = facilityModel.clientFacilitiesDetailsList[0];
+    NSString *str =dic[@"ssfLongitudeLatitude"];
+    CLLocationCoordinate2D coor1 = [_calTool getLocationWithsize:self.imagesize location:[_calTool getLocationWithString:str]];
+    [self.mapView centerOnPoint:CGPointMake(coor1.longitude, coor1.latitude) animated:NO];
+
+}
+#pragma mark ---导航栏弹窗弹起事件---
+- (void)navGationBtnClicked:(UIButton *)btn{
+    btn.selected = !btn.isSelected;
+
+    _NavpopView.hidden = btn.selected?NO:YES;
 }
 /// 清空路线和图标显示
 - (void)clearMapImageView{
