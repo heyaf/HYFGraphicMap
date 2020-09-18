@@ -135,4 +135,7 @@
 ![效果展示.png](https://upload-images.jianshu.io/upload_images/1431215-1b3aa2d0362385ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-为了把项目中其他的点也体现出来，整理成[项目](https://github.com/hyf12138/HYFGraphicMap)了，有兴趣的同学可以下载下来看看。
+## TO DO
+1.路线的绘制是在layer层，这就导致了一个问题：在手绘图放大或者缩小时，路线的宽度会随之变化，下一步尝试解决
+
+
