@@ -20,15 +20,11 @@
     //经度=(现在经度-左上经度)/(右上经度-左上经度)*image宽度
     location.longitude = (locationNow.longitude-self.leftToplocation.longitude)/(self.rightTopLocation.longitude-self.leftToplocation.longitude)*size.width;
     
-//    CGFloat f =(locationNow.longitude-self.leftToplocation.longitude);
-//    CGFloat m =(self.rightTopLocation.longitude-self.rightTopLocation.longitude);
-//    
-//    CGFloat f1 =(self.leftToplocation.latitude-locationNow.latitude);
-//    CGFloat f2 =(self.leftToplocation.latitude-self.leftBottomLocation.latitude);
-//
-    
     return location;
 }
+/// 计算某位置在手绘图中的坐标
+/// @param imageSize 手绘图尺寸
+/// @param locationNow 当前位置的经纬度坐标
 - (CLLocationCoordinate2D)getLocationWithsize:(CGSize)imageSize location:(CLLocationCoordinate2D) locationNow{
     
     CGSize size = imageSize;
@@ -37,14 +33,6 @@
     location.latitude = (self.leftToplocation.latitude-locationNow.latitude)/(self.leftToplocation.latitude-self.leftBottomLocation.latitude)*size.height;
     //经度=(现在经度-左上经度)/(右上经度-左上经度)*image宽度
     location.longitude = (locationNow.longitude-self.leftToplocation.longitude)/(self.rightTopLocation.longitude-self.leftToplocation.longitude)*size.width;
-    
-//    CGFloat f =(locationNow.longitude-self.leftToplocation.longitude);
-//    CGFloat m =(self.rightTopLocation.longitude-self.rightTopLocation.longitude);
-//
-//    CGFloat f1 =(self.leftToplocation.latitude-locationNow.latitude);
-//    CGFloat f2 =(self.leftToplocation.latitude-self.leftBottomLocation.latitude);
-//
-    
     return location;
 }
 - (CLLocationCoordinate2D )getLocationWithString:(NSString *)str{

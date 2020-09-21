@@ -94,7 +94,6 @@
         [value getValue:&coor];
         
         CLLocationCoordinate2D coor1 = [calculatorTool getLocationWithsize:imagesize location:coor];
-        NSLog(@"---%f,%f",coor1.longitude,coor1.latitude);
         if (i==0) {
             // 起点
             [linePath moveToPoint:CGPointMake(coor1.longitude,coor1.latitude)];
